@@ -2,6 +2,10 @@
     max-width: 680px;
 }
 
+#preview_canvas {
+    max-width: 100%;
+}
+
 .form-group:after {
     clear: both;
     content: ' ';
