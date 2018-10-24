@@ -9,6 +9,7 @@
 
         var ctx;
         var template;
+        var text;
         var container = $('.meme-generator');
         var form = container.find('form');
         var topText = container.find('[name=top_text]');
@@ -37,8 +38,6 @@
         function selectMeme() {
             var target = $(this);
             var name = target.data('name');
-
-            console.log(name);
 
             template = name + '_meme.jpg';
 
@@ -73,20 +72,42 @@
 
                 fontSize = imgWidth * topTextSizeValue;
 
+                text = getTextLines(topTextValue);
                 ctx.font = fontSize + 'px Impact';
                 ctx.lineWidth = fontSize / 20;
                 ctx.textBaseline = 'top';
-                ctx.fillText(topTextValue, imgWidth / 2, 0, imgWidth);
-                ctx.strokeText(topTextValue, imgWidth / 2, 0, imgWidth);
+
+                for (var i = 0; i < text.length; i ++) {
+                    ctx.fillText(text[i], imgWidth / 2, i * fontSize, imgWidth);
+                    ctx.strokeText(text[i], imgWidth / 2, i * fontSize, imgWidth);
+                }
 
                 fontSize = imgWidth * bottomTextSizeValue;
 
+                text = getTextLines(bottomTextValue).reverse();
                 ctx.font = fontSize + 'px Impact';
                 ctx.lineWidth = fontSize / 20;
                 ctx.textBaseline = 'bottom';
-                ctx.fillText(bottomTextValue, imgWidth / 2, imgHeight, imgWidth);
-                ctx.strokeText(bottomTextValue, imgWidth / 2, imgHeight, imgWidth);
+
+                for (var i = 0; i < text.length; i ++) {
+                    ctx.fillText(text[i], imgWidth / 2, imgHeight - i * fontSize, imgWidth);
+                    ctx.strokeText(text[i], imgWidth / 2, imgHeight - i * fontSize, imgWidth);
+                }
             };
+        }
+
+        function getTextLines(value) {
+            if (!value) { return []; }
+
+            var val = value.split('\n');
+
+            val = val.map(
+                function (item) {
+                    return item.trim();
+                }
+            );
+
+            return val;
         }
 
         function generateMeme() {
