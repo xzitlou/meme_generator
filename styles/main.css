@@ -1,0 +1,17 @@
+.container {
+    max-width: 680px;
+}
+
+.form-group:after {
+    clear: both;
+    content: ' ';
+    display: table;
+}
+
+.list-memes span {
+    display: inline-block;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 180px;
+}
